@@ -6,6 +6,8 @@ import { users } from "@/models/apps/auth/user.models.js";
 import { chats } from "@/models/apps/chat-app/chat.models.js";
 import { products } from "@/models/apps/ecommerce/product.models.js";
 import { todos } from "@/models/apps/todo/todo.models.js";
+import { geoCountries } from "@/models/public/geo.models.js";
+import { publicJsonDocs } from "@/models/public/public-json.models.js";
 import { USERS_COUNT } from "@/seeds/_constants.js";
 import { getTestAgent } from "../helpers/app.js";
 import { clearDb } from "../helpers/db.js";
@@ -14,7 +16,8 @@ import { clearDb } from "../helpers/db.js";
  * P9 roundtrip gate (test-DB equivalent of):
  *   seed apps → hit APIs → reset-db → re-seed
  *
- * Public JSON seed (`db:seed:public`) is covered in tests/public/*;
+ * Public JSON / geo must survive reset-db (reference datasets).
+ * Full public seed (`db:seed:public`) is covered in tests/public/*;
  * migrate is a CLI precondition, not asserted here.
  */
 describe("P9 — reset-db roundtrip", () => {
@@ -33,6 +36,18 @@ describe("P9 — reset-db roundtrip", () => {
   test(
     "seed → reset-db → re-seed restores domain data",
     async () => {
+      // Sentinel reference rows — must survive reset-db
+      await dbInstance.insert(publicJsonDocs).values({
+        collection: "_reset_db_sentinel",
+        docId: "1",
+        payload: { ok: true },
+      });
+      await dbInstance.insert(geoCountries).values({
+        id: 900001,
+        name: "ResetDb Sentinel",
+        iso2: "ZZ",
+      });
+
       const chatSeed = await agent.post("/api/v1/seed/chat-app");
       expect(chatSeed.status).toBe(201);
 
@@ -87,6 +102,20 @@ describe("P9 — reset-db roundtrip", () => {
       expect(Number(usersAfterReset?.value ?? 0)).toBe(0);
       expect(Number(chatsAfterReset?.value ?? 0)).toBe(0);
       expect(Number(productsAfterReset?.value ?? 0)).toBe(0);
+
+      // Reference datasets must not be truncated
+      const [publicSentinel] = await dbInstance
+        .select({ docId: publicJsonDocs.docId })
+        .from(publicJsonDocs)
+        .where(eq(publicJsonDocs.collection, "_reset_db_sentinel"))
+        .limit(1);
+      const [geoSentinel] = await dbInstance
+        .select({ id: geoCountries.id })
+        .from(geoCountries)
+        .where(eq(geoCountries.id, 900001))
+        .limit(1);
+      expect(publicSentinel?.docId).toBe("1");
+      expect(geoSentinel?.id).toBe(900001);
 
       // Migration journal must survive reset-db (schema history kept)
       const journal = await dbInstance.execute(

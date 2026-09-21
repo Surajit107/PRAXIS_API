@@ -278,15 +278,15 @@ app.post(
 initializeSocketIO(io);
 
 // ! 🚫 Danger Zone
-// Wipe *data* (keep schema). Full schema drop for re-migrate is `npm run db:drop-all`.
+// Wipe *app* data (keep schema + public JSON + geo). Full schema drop: `npm run db:drop-all`.
 app.delete("/api/v1/reset-db", avoidInProduction, async (req, res) => {
   if (!dbInstance) {
     throw new ApiError(500, "Something went wrong while dropping the database");
   }
 
   try {
-    // Truncate every public table in one statement (CASCADE clears FK order issues).
-    // Schema + drizzle migration journal remain intact — unlike `db:drop-all`.
+    // Truncate app tables only. Never touch reference datasets or migration journal.
+    // CASCADE clears FK order issues among truncated tables.
     await dbInstance.execute(sql.raw(`
       DO $$
       DECLARE
@@ -297,7 +297,13 @@ app.delete("/api/v1/reset-db", avoidInProduction, async (req, res) => {
         INTO stmt
         FROM pg_tables
         WHERE schemaname = 'public'
-          AND tablename <> '__drizzle_migrations';
+          AND tablename NOT IN (
+            '__drizzle_migrations',
+            'public_json_docs',
+            'geo_countries',
+            'geo_states',
+            'geo_cities'
+          );
 
         IF stmt IS NOT NULL THEN
           EXECUTE stmt;
