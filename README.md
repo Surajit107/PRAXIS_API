@@ -68,7 +68,7 @@ Use it when you need a stable local API to build frontends against, teach backen
 | **World datasets** | Companies, customers, employees, inventory, orders, tickets, invoices, shipments, transactions, projects, subscriptions, appointments |
 | **Geo** | Cascading `countries → states → cities` with pagination (~150k cities) |
 | **Kitchen sink** | HTTP methods, status codes, request/response inspection, cookies, redirects, images |
-| **Ops** | Health / live / ready / version, seed routes, `DELETE /api/v1/reset-db` (development only) |
+| **Ops** | Health / live / ready / version, seed routes, `DELETE /api/v1/reset-db` (dev only; preserves public JSON + geo) |
 
 ### Platform
 
@@ -129,7 +129,7 @@ npm start
 
 Open **Swagger** at [http://localhost:8000](http://localhost:8000) and hit the API under `/api/v1`.
 
-> **Security note:** Seed routes and `DELETE /api/v1/reset-db` only work when `NODE_ENV` is exactly `development`. Any other value returns `403`.
+> **Security note:** Seed routes and `DELETE /api/v1/reset-db` only work when `NODE_ENV` is exactly `development`. Any other value returns `403`. `reset-db` truncates app tables only — it never touches `public_json_docs` or geo tables.
 
 ---
 

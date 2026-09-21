@@ -15,7 +15,7 @@ Hands-on Express + PostgreSQL API platform for learning, prototyping, and integr
 - UUID primary keys exposed as `_id` in JSON (`serializers`)
 - Pagination helper with `aggregatePaginate`-compatible response shape
 - Auth plumbing: JWT middleware, Passport Google/GitHub, Socket.IO handshake
-- `DELETE /api/v1/reset-db` — truncate app data (keeps schema + migration journal)
+- `DELETE /api/v1/reset-db` — truncate app data (keeps schema, migration journal, `public_json_docs`, geo tables)
 - `npm run db:drop-all` — full schema wipe for re-migrate
 - Health endpoints: `/healthcheck`, `/live`, `/ready`, `/version`
 - Kitchen-sink utilities (HTTP methods, status codes, request/response inspection, cookies, redirect, image)
