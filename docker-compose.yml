@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  backend:
+    image: praxis-api-server
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/usr/src/praxis-api
+      - /usr/src/praxis-api/node_modules
+    env_file:
+      - ./.env
+    environment:
+      # Compose network DNS — overrides host-oriented DATABASE_URL from .env
+      DATABASE_URL: postgresql://praxisapi:praxisapi@postgres:5432/praxisapi
+      NODE_ENV: development
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: praxis-api-postgres
+    environment:
+      POSTGRES_USER: praxisapi
+      POSTGRES_PASSWORD: praxisapi
+      POSTGRES_DB: praxisapi
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U praxisapi -d praxisapi"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  data:

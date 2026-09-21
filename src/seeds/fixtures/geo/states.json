@@ -1,0 +1,32 @@
+[
+  {
+    "id": 4008,
+    "name": "Maharashtra",
+    "country_id": 101,
+    "country_code": "IN",
+    "state_code": "MH",
+    "type": "state",
+    "latitude": "19.75147980",
+    "longitude": "75.71388840"
+  },
+  {
+    "id": 4022,
+    "name": "Karnataka",
+    "country_id": 101,
+    "country_code": "IN",
+    "state_code": "KA",
+    "type": "state",
+    "latitude": "15.31727750",
+    "longitude": "75.71388840"
+  },
+  {
+    "id": 1416,
+    "name": "California",
+    "country_id": 233,
+    "country_code": "US",
+    "state_code": "CA",
+    "type": "state",
+    "latitude": "36.77826100",
+    "longitude": "-119.41793240"
+  }
+]

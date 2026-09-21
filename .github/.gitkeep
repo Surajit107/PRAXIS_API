@@ -1,0 +1,2 @@
+# The geo SQLite artifact is written here by `npm run geo:build`.
+# The artifact itself is gitignored — it is a build output, not source.

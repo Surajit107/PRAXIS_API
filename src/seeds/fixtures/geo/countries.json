@@ -1,0 +1,28 @@
+[
+  {
+    "id": 101,
+    "name": "India",
+    "iso2": "IN",
+    "iso3": "IND",
+    "phonecode": "91",
+    "capital": "New Delhi",
+    "currency": "INR",
+    "native": "भारत",
+    "emoji": "🇮🇳",
+    "latitude": "20.00000000",
+    "longitude": "77.00000000"
+  },
+  {
+    "id": 233,
+    "name": "United States",
+    "iso2": "US",
+    "iso3": "USA",
+    "phonecode": "1",
+    "capital": "Washington",
+    "currency": "USD",
+    "native": "United States",
+    "emoji": "🇺🇸",
+    "latitude": "38.00000000",
+    "longitude": "-97.00000000"
+  }
+]
