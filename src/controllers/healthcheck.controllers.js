@@ -1,5 +1,6 @@
 import { createRequire } from "module";
 import { sql } from "drizzle-orm";
+import { getRedisClient, isRedisReady } from "@/cache/redis.js";
 import { dbInstance } from "@/db/index.js";
 import { ApiError } from "@/utils/ApiError.js";
 import { ApiResponse } from "@/utils/ApiResponse.js";
@@ -27,7 +28,26 @@ const live = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @returns {Promise<"ready" | "disabled" | "unhealthy">}
+ */
+const probeRedis = async () => {
+  if (!process.env.REDIS_URL?.trim()) {
+    return "disabled";
+  }
+  if (!isRedisReady()) {
+    return "unhealthy";
+  }
+  try {
+    const pong = await getRedisClient().ping();
+    return pong === "PONG" ? "ready" : "unhealthy";
+  } catch {
+    return "unhealthy";
+  }
+};
+
+/**
  * Readiness — process can serve traffic (DB reachable).
+ * Redis is optional: missing/unhealthy Redis does not fail readiness.
  */
 const ready = asyncHandler(async (req, res) => {
   if (!dbInstance) {
@@ -40,9 +60,15 @@ const ready = asyncHandler(async (req, res) => {
     throw new ApiError(503, "Database unhealthy");
   }
 
-  return res
-    .status(200)
-    .json(new ApiResponse(200, { status: "ready" }, "Readiness check passed"));
+  const redis = await probeRedis();
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      { status: "ready", redis },
+      "Readiness check passed"
+    )
+  );
 });
 
 /**

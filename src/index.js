@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { httpServer } from "@/app.js";
+import connectRedis from "@/cache/redis.js";
 import connectDB from "@/db/index.js";
 import logger from "@/logger/winston.logger.js";
 
@@ -24,19 +25,23 @@ const startServer = () => {
   });
 };
 
+/**
+ * Postgres is required; Redis is optional (fail-open caching).
+ */
+const boot = async () => {
+  await connectDB();
+  await connectRedis();
+  startServer();
+};
+
 if (majorNodeVersion >= 14) {
   try {
-    await connectDB();
-    startServer();
+    await boot();
   } catch (err) {
     logger.error("PostgreSQL connect error: ", err);
   }
 } else {
-  connectDB()
-    .then(() => {
-      startServer();
-    })
-    .catch((err) => {
-      logger.error("PostgreSQL connect error: ", err);
-    });
+  boot().catch((err) => {
+    logger.error("PostgreSQL connect error: ", err);
+  });
 }

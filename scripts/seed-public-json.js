@@ -10,7 +10,9 @@
 import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
+import connectRedis, { disconnectRedis } from "../src/cache/redis.js";
 import { seedPublicJson } from "../src/seeds/public-json.seeds.js";
+import { invalidatePublicJsonCache } from "../src/utils/publicJsonDb.js";
 
 config({ path: ".env" });
 
@@ -32,9 +34,16 @@ try {
     },
   });
   console.log(`Done. Total rows: ${total}`);
+
+  await connectRedis();
+  const deleted = await invalidatePublicJsonCache();
+  if (deleted > 0) {
+    console.log(`Invalidated ${deleted} Redis cache key(s)`);
+  }
 } catch (error) {
   console.error(error);
   process.exitCode = 1;
 } finally {
+  await disconnectRedis();
   await sql.end({ timeout: 5 });
 }
