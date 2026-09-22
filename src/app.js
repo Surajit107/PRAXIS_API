@@ -13,8 +13,10 @@ import swaggerUi from "swagger-ui-express";
 import { fileURLToPath } from "url";
 import YAML from "yaml";
 import { sql } from "drizzle-orm";
+import { PraxisRedisStore } from "@/cache/sessionStore.js";
 import { dbInstance } from "@/db/index.js";
 import morganMiddleware from "@/logger/morgan.logger.js";
+import logger from "@/logger/winston.logger.js";
 import { initializeSocketIO } from "@/socket/index.js";
 import { ApiError } from "@/utils/ApiError.js";
 import { ApiResponse } from "@/utils/ApiResponse.js";
@@ -40,6 +42,9 @@ if (swaggerDocument?.paths) {
 }
 
 const app = express();
+
+// Needed behind Render / reverse proxies so secure cookies and client IPs work.
+app.set("trust proxy", 1);
 
 const httpServer = createServer(app);
 
@@ -102,14 +107,36 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public")); // configure static file to save images locally
 app.use(cookieParser());
 
-// required for passport
-app.use(
-  session({
-    secret: process.env.EXPRESS_SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-  })
-); // session secret
+// required for passport (OAuth). Prefer Redis store — MemoryStore is not production-safe.
+const isProduction = process.env.NODE_ENV === "production";
+const hasRedisUrl = Boolean(process.env.REDIS_URL?.trim());
+
+/** @type {import("express-session").SessionOptions} */
+const sessionOptions = {
+  secret: process.env.EXPRESS_SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  name: "praxis.sid",
+  cookie: {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax",
+    maxAge: 24 * 60 * 60 * 1000,
+  },
+};
+
+if (hasRedisUrl) {
+  sessionOptions.store = new PraxisRedisStore({
+    prefix: "sess:",
+    ttl: 86_400,
+  });
+} else {
+  logger.warn(
+    "REDIS_URL unset — express-session is using MemoryStore (not production-safe)"
+  );
+}
+
+app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
@@ -179,7 +206,6 @@ import responseinspectionRouter from "@/routes/kitchen-sink/responseinspection.r
 import statuscodeRouter from "@/routes/kitchen-sink/statuscode.routes.js";
 
 // * Seeding handlers
-import logger from "@/logger/winston.logger.js";
 import { avoidInProduction } from "@/middlewares/auth.middlewares.js";
 import { seedChatApp } from "@/seeds/chat-app.seeds.js";
 import { seedEcommerce } from "@/seeds/ecommerce.seeds.js";
@@ -343,9 +369,8 @@ app.delete("/api/v1/reset-db", avoidInProduction, async (req, res) => {
 });
 
 // * API DOCS
-// ? Keeping swagger code at the end so that we can load swagger on "/" route
 app.use(
-  "/",
+  "/docs",
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, {
     swaggerOptions: {

@@ -41,7 +41,7 @@ Use it when you need a stable local API to build frontends against, teach backen
 | | |
 | --- | --- |
 | **Base path** | `/api/v1` |
-| **Interactive docs** | Swagger UI at [`/`](http://localhost:8000/) |
+| **Interactive docs** | Swagger UI at [`/docs`](http://localhost:8000/docs) |
 | **Default host** | `http://localhost:8000` |
 | **Feature catalog** | [`docs/FEATURES.md`](docs/FEATURES.md) |
 

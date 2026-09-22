@@ -2,8 +2,8 @@
 
 Hands-on Express + PostgreSQL API platform for learning, prototyping, and integration tests.
 
-**Stack:** Express 5 · Drizzle ORM · PostgreSQL · Socket.IO · Resend · Jest  
-**Docs UI:** Swagger at `/` · Base path `/api/v1`
+**Stack:** Express 5 · Drizzle ORM · PostgreSQL · Redis (ioredis) · Socket.IO · Resend · Jest  
+**Docs UI:** Swagger at `/docs` · Base path `/api/v1`
 
 ---
 
@@ -12,6 +12,11 @@ Hands-on Express + PostgreSQL API platform for learning, prototyping, and integr
 - Express app with CORS, rate limit, sessions, Passport, Morgan, cookie parser
 - Path aliases `@/*` → `src/*`
 - PostgreSQL via `DATABASE_URL` + Drizzle schemas / migrations (`drizzle/`)
+- **Redis** via `REDIS_URL` (optional; skipped under Jest):
+  - Public JSON cache-aside (`src/cache/cache.js`) — fails open if Redis is missing/unreachable
+  - `express-session` store for Passport OAuth (`PraxisRedisStore`) — preferred over MemoryStore when `REDIS_URL` is set
+  - Namespaced keys via `REDIS_KEY_PREFIX` (default `praxisapi:`) for shared Redis instances
+  - Readiness probe reports Redis status without failing `/ready` when Redis is down
 - UUID primary keys exposed as `_id` in JSON (`serializers`)
 - Pagination helper with `aggregatePaginate`-compatible response shape
 - Auth plumbing: JWT middleware, Passport Google/GitHub, Socket.IO handshake
