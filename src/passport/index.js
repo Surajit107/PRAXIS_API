@@ -159,34 +159,13 @@ try {
             return;
           }
 
-          const email = profile._json.email?.toLowerCase()?.trim();
+          // GitHub often omits _json.email unless the address is public.
+          // With scope user:email, passport-github2 fills profile.emails.
+          const email =
+            profile.emails?.[0]?.value?.toLowerCase()?.trim() ||
+            profile._json?.email?.toLowerCase()?.trim();
 
-          if (email) {
-            const [user] = await dbInstance
-              .select()
-              .from(users)
-              .where(eq(users.email, email))
-              .limit(1);
-
-            if (user) {
-              if (user.loginType !== UserLoginType.GITHUB) {
-                next(
-                  new ApiError(
-                    400,
-                    "You have previously registered using " +
-                      user.loginType?.toLowerCase()?.split("_").join(" ") +
-                      ". Please use the " +
-                      user.loginType?.toLowerCase()?.split("_").join(" ") +
-                      " login option to access your account."
-                  ),
-                  null
-                );
-                return;
-              }
-              next(null, shapeUser(user));
-              return;
-            }
-          } else {
+          if (!email) {
             next(
               new ApiError(
                 400,
@@ -194,6 +173,31 @@ try {
               ),
               null
             );
+            return;
+          }
+
+          const [user] = await dbInstance
+            .select()
+            .from(users)
+            .where(eq(users.email, email))
+            .limit(1);
+
+          if (user) {
+            if (user.loginType !== UserLoginType.GITHUB) {
+              next(
+                new ApiError(
+                  400,
+                  "You have previously registered using " +
+                    user.loginType?.toLowerCase()?.split("_").join(" ") +
+                    ". Please use the " +
+                    user.loginType?.toLowerCase()?.split("_").join(" ") +
+                    " login option to access your account."
+                ),
+                null
+              );
+              return;
+            }
+            next(null, shapeUser(user));
             return;
           }
 

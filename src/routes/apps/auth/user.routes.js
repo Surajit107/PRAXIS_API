@@ -92,7 +92,8 @@ router.route("/google").get(
 
 router.route("/github").get(
   passport.authenticate("github", {
-    scope: ["profile", "email"],
+    // GitHub scopes — NOT Google's "profile"/"email"
+    scope: ["read:user", "user:email"],
   }),
   (req, res) => {
     res.send("redirecting to github...");
