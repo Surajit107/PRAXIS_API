@@ -19,14 +19,15 @@ const startServer = () => {
     logger.info(
       `📑 Visit the documentation at: http://localhost:${
         process.env.PORT || 8000
-      }`
+      }/docs`
     );
     logger.info("⚙️  Server is running on port: " + process.env.PORT);
   });
 };
 
 /**
- * Postgres is required; Redis is optional (fail-open caching).
+ * Postgres is required; Redis is optional for caching but used for sessions
+ * when REDIS_URL is set (avoids express-session MemoryStore on live).
  */
 const boot = async () => {
   await connectDB();

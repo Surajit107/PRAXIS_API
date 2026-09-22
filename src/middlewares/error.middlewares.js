@@ -93,14 +93,16 @@ const errorHandler = (err, req, res, next) => {
     error = new ApiError(statusCode, message, error?.errors || [], err.stack);
   }
 
-  // Now we are sure that the `error` variable will be an instance of ApiError class
+  // Explicit shape only — never leak Error.stack (or other Error internals) to clients
   const response = {
-    ...error,
+    statusCode: error.statusCode,
+    data: error.data ?? null,
+    success: false,
+    errors: error.errors ?? [],
     message: error.message,
-    ...(process.env.NODE_ENV === "development" ? { stack: error.stack } : {}), // Error stack traces should be visible in development for debugging
   };
 
-  logger.error(`${error.message}`);
+  logger.error(error.stack || error.message);
 
   removeUnusedMulterImageFilesOnError(req);
   // Send error response

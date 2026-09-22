@@ -37,8 +37,9 @@ export const isRedisReady = () =>
   Boolean(redisClient && redisClient.status === "ready");
 
 /**
- * Connect to Redis when REDIS_URL is set. Fail-open: app runs without cache
- * if Redis is missing or unreachable. Skipped under Jest so tests stay DB-only.
+ * Connect to Redis when REDIS_URL is set. Used for public JSON caching and
+ * express-session (OAuth). Caching fails open if Redis is missing/unreachable;
+ * session writes will error until Redis is healthy again. Skipped under Jest.
  * @returns {Promise<import("ioredis").default | null>}
  */
 export const connectRedis = async () => {
