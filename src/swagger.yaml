@@ -2,43 +2,42 @@ openapi: 3.0.3
 info:
   title: Praxis API
   description: |-
-    # ⚡ Praxis API
+    # Praxis API
 
-    Praxis is a hands-on API platform for learning, prototyping, and validating backend integrations.
+    Praxis is a practice API platform for learning, prototyping, and validating backend integrations.
     It exposes ready-to-use HTTP surfaces across common application domains so you can focus on client
     behavior, auth flows, and data modeling instead of scaffolding every service from scratch.
 
-    ## ✨ What you get
+    ## What you get
 
-    - 🔌 **Practice-ready endpoints** for 🔐 auth, 🛒 ecommerce, 📱 social, 💬 chat, ✅ todos, and 📡 public sample data
-    - 📐 **Consistent response contracts** so clients can rely on predictable shapes across modules
-    - 🖥️ **Local-first workflow** with documentation you can explore interactively in this UI
-    - 🧪 **Safe experimentation** — 🌱 seed data, reset flows, and 🧰 utility routes designed for development use
+    - Practice-ready endpoints for auth, ecommerce, social, chat, todos, and public sample data
+    - Consistent response contracts so clients can rely on predictable shapes across modules
+    - Local-first workflow with interactive documentation in this UI
+    - Safe experimentation — seed data, reset flows, and utility routes designed for development use
 
     Use Praxis as a sandbox while you build frontends, mobile apps, or integration tests. Point your
     client at the server URL below, authenticate where required, and iterate against real HTTP behavior.
 
-    ## 🚀 Getting started
+    ## Getting started
 
-    1. 🧾 Configure environment variables from `.env.sample`
-    2. 📦 Install dependencies and run database migrations
-    3. ▶️ Start the server and open this documentation root
-    4. 🧭 Try 📡 Public and 🧰 Utilities routes first, then 🔐 Authentication-backed modules
+    1. Configure environment variables from `.env.sample`
+    2. Install dependencies and run database migrations
+    3. Start the server and open this documentation root
+    4. Try Public and Utilities routes first, then Authentication-backed modules
 
-    ## 🛟 Support
+    ## Support
 
     Report defects against your project repository. Include the route, request payload, and response
     body so issues can be reproduced quickly.
   version: 1.3.1
-  contact:
-    name: Praxis API Maintainers
 servers:
-  - url: ${{server}}
+  - url: http://localhost:8000/api/v1
+    description: Local Praxis API
 paths:
   /public/randomusers:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get users
       description: >-
@@ -1210,7 +1209,7 @@ paths:
   /public/randomusers/{userId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get user by id
       description: >-
@@ -1462,7 +1461,7 @@ paths:
   /public/randomusers/user/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random user
       description: >-
@@ -1704,7 +1703,7 @@ paths:
   /public/randomproducts:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get products
       description: >-
@@ -2086,7 +2085,7 @@ paths:
   /public/randomproducts/{productId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get product by id
       description: >-
@@ -2228,7 +2227,7 @@ paths:
   /public/randomproducts/product/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random product
       description: >-
@@ -2364,7 +2363,7 @@ paths:
   /public/randomjokes:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get jokes
       description: >-
@@ -2566,7 +2565,7 @@ paths:
   /public/randomjokes/{jokeId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get joke by id
       description: >-
@@ -2667,7 +2666,7 @@ paths:
   /public/randomjokes/joke/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random joke
       description: >-
@@ -2759,7 +2758,7 @@ paths:
   /public/books:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get books
       description: >-
@@ -4554,7 +4553,7 @@ paths:
   /public/books/{bookId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get book by id
       description: >-
@@ -4934,7 +4933,7 @@ paths:
   /public/books/book/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random book
       description: >-
@@ -5286,7 +5285,7 @@ paths:
   /public/stocks:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get stocks
       description: >-
@@ -5509,7 +5508,7 @@ paths:
   /public/stocks/{stockSymbol}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get stock by symbol id
       description: >-
@@ -5642,7 +5641,7 @@ paths:
   /public/stocks/stock/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random stock
       description: >-
@@ -5767,7 +5766,7 @@ paths:
   /public/geo/countries:
     get:
       tags:
-        - 🌍 Geo APIs
+        - Geo APIs
       summary: List countries
       description: >-
         Returns a paginated list of countries.
@@ -5848,7 +5847,7 @@ paths:
   /public/geo/states:
     get:
       tags:
-        - 🌍 Geo APIs
+        - Geo APIs
       summary: List states by country
       description: >-
         Returns states or provinces for a selected country.
@@ -5933,7 +5932,7 @@ paths:
   /public/geo/cities:
     get:
       tags:
-        - 🌍 Geo APIs
+        - Geo APIs
       summary: List cities by state
       description: >-
         Returns cities for a selected state.
@@ -6017,7 +6016,7 @@ paths:
   /public/quotes:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get quotes
       description: >-
@@ -6293,7 +6292,7 @@ paths:
   /public/quotes/{quoteId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get quote by id
       description: >-
@@ -6423,7 +6422,7 @@ paths:
   /public/quotes/quote/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random quote
       description: >-
@@ -6537,7 +6536,7 @@ paths:
   /public/meals:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get meals
       description: >-
@@ -7050,7 +7049,7 @@ paths:
   /public/meals/{mealId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get meal by id
       description: >-
@@ -7350,7 +7349,7 @@ paths:
   /public/meals/meal/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random meal
       description: >-
@@ -7642,7 +7641,7 @@ paths:
   /public/dogs:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get dogs
       description: >-
@@ -7872,7 +7871,7 @@ paths:
   /public/dogs/{dogId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get dog by id
       description: >-
@@ -8030,7 +8029,7 @@ paths:
   /public/dogs/dog/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random dog
       description: >-
@@ -8175,7 +8174,7 @@ paths:
   /public/cats:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get cats
       description: >-
@@ -8606,7 +8605,7 @@ paths:
   /public/cats/{catId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get cat by id
       description: >-
@@ -8859,7 +8858,7 @@ paths:
   /public/cats/cat/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
         
       summary: Get a random cat
       description: >-
@@ -9098,7 +9097,7 @@ paths:
   /public/companies:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get companies
       description: >-
         Returns a paginated list of company / organization records (CRM-style).
@@ -9200,7 +9199,7 @@ paths:
   /public/companies/{companyId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get company by id
       description: >-
         Fetch a single document from the companies collection by id.
@@ -9261,7 +9260,7 @@ paths:
   /public/companies/company/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random company
       description: >-
         Returns one randomly selected document from the companies collection.
@@ -9315,7 +9314,7 @@ paths:
   /public/customers:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get customers
       description: >-
         Returns a paginated list of customer records.
@@ -9411,7 +9410,7 @@ paths:
   /public/customers/{customerId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get customer by id
       description: >-
         Fetch a single document from the customers collection by id.
@@ -9466,7 +9465,7 @@ paths:
   /public/customers/customer/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random customer
       description: >-
         Returns one randomly selected document from the customers collection.
@@ -9514,7 +9513,7 @@ paths:
   /public/employees:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get employees
       description: >-
         Returns a paginated list of employee / HRIS records.
@@ -9616,7 +9615,7 @@ paths:
   /public/employees/{employeeId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get employee by id
       description: >-
         Fetch a single document from the employees collection by id.
@@ -9677,7 +9676,7 @@ paths:
   /public/employees/employee/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random employee
       description: >-
         Returns one randomly selected document from the employees collection.
@@ -9731,7 +9730,7 @@ paths:
   /public/inventory:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get inventory
       description: >-
         Returns paginated warehouse inventory records (SKU, stock levels, images, location).
@@ -9848,7 +9847,7 @@ paths:
   /public/inventory/{inventoryId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get inventory item by id
       description: >-
         Fetch a single document from the inventory collection by id.
@@ -9924,7 +9923,7 @@ paths:
   /public/inventory/item/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random inventory item
       description: >-
         Returns one randomly selected document from the inventory collection.
@@ -9993,7 +9992,7 @@ paths:
   /public/orders:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get orders
       description: >-
         Returns paginated commerce order documents (public sample data, not ecommerce app orders).
@@ -10118,7 +10117,7 @@ paths:
   /public/orders/{orderId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get order by id
       description: >-
         Fetch a single document from the orders collection by id.
@@ -10202,7 +10201,7 @@ paths:
   /public/orders/order/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random order
       description: >-
         Returns one randomly selected document from the orders collection.
@@ -10279,7 +10278,7 @@ paths:
   /public/tickets:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get support tickets
       description: >-
         Returns paginated support ticket records (Zendesk / Freshdesk-style).
@@ -10393,7 +10392,7 @@ paths:
   /public/tickets/{ticketId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get support ticket by id
       description: >-
         Fetch a single document from the tickets collection by id.
@@ -10466,7 +10465,7 @@ paths:
   /public/tickets/ticket/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random support ticket
       description: >-
         Returns one randomly selected document from the tickets collection.
@@ -10532,7 +10531,7 @@ paths:
   /public/invoices:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get invoices
       description: >-
         Returns paginated invoice / billing documents.
@@ -10640,7 +10639,7 @@ paths:
   /public/invoices/{invoiceId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get invoice by id
       description: >-
         Fetch a single document from the invoices collection by id.
@@ -10707,7 +10706,7 @@ paths:
   /public/invoices/invoice/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random invoice
       description: >-
         Returns one randomly selected document from the invoices collection.
@@ -10767,7 +10766,7 @@ paths:
   /public/shipments:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get shipments
       description: >-
         Returns paginated shipment / tracking records.
@@ -10866,7 +10865,7 @@ paths:
   /public/shipments/{shipmentId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get shipment by id
       description: >-
         Fetch a single document from the shipments collection by id.
@@ -10924,7 +10923,7 @@ paths:
   /public/shipments/shipment/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random shipment
       description: >-
         Returns one randomly selected document from the shipments collection.
@@ -10975,7 +10974,7 @@ paths:
   /public/transactions:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get transactions
       description: >-
         Returns paginated payment transaction records.
@@ -11077,7 +11076,7 @@ paths:
   /public/transactions/{transactionId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get transaction by id
       description: >-
         Fetch a single document from the transactions collection by id.
@@ -11138,7 +11137,7 @@ paths:
   /public/transactions/transaction/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random transaction
       description: >-
         Returns one randomly selected document from the transactions collection.
@@ -11192,7 +11191,7 @@ paths:
   /public/projects:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get projects
       description: >-
         Returns paginated project tracker records.
@@ -11291,7 +11290,7 @@ paths:
   /public/projects/{projectId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get project by id
       description: >-
         Fetch a single document from the projects collection by id.
@@ -11349,7 +11348,7 @@ paths:
   /public/projects/project/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random project
       description: >-
         Returns one randomly selected document from the projects collection.
@@ -11400,7 +11399,7 @@ paths:
   /public/subscriptions:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get subscriptions
       description: >-
         Returns paginated SaaS subscription records.
@@ -11511,7 +11510,7 @@ paths:
   /public/subscriptions/{subscriptionId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get subscription by id
       description: >-
         Fetch a single document from the subscriptions collection by id.
@@ -11581,7 +11580,7 @@ paths:
   /public/subscriptions/subscription/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random subscription
       description: >-
         Returns one randomly selected document from the subscriptions collection.
@@ -11644,7 +11643,7 @@ paths:
   /public/appointments:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get appointments
       description: >-
         Returns paginated appointment / scheduling records.
@@ -11755,7 +11754,7 @@ paths:
   /public/appointments/{appointmentId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get appointment by id
       description: >-
         Fetch a single document from the appointments collection by id.
@@ -11825,7 +11824,7 @@ paths:
   /public/appointments/appointment/random:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get a random appointment
       description: >-
         Returns one randomly selected document from the appointments collection.
@@ -11888,7 +11887,7 @@ paths:
   /public/youtube/channel:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get channel details
       description: "This Channel Details API is your gateway to access comprehensive information about a specific YouTube channel.\n\nBy leveraging a static JSON file, you can effortlessly retrieve and explore vital details, statistics, and metadata associated with the channel to build stunning YouTube like channel page UI.\n\n**Disclaimer:**\n\nData provided by the API is static and not real-time.\n\nThis simplifies the process of developing a\_**YouTube clone**, allowing developers to solely focus on UI design and creativity, without worrying about complex API key configuration."
       operationId: getChannelDetails
@@ -12327,7 +12326,7 @@ paths:
   /public/youtube/videos:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get youtube videos
       description: >-
         This API endpoint enables you to retrieve all YouTube videos from a JSON
@@ -14736,7 +14735,7 @@ paths:
   /public/youtube/videos/{videoId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get video by id
       description: >-
         This API endpoint allows you to retrieve a YouTube video's complete
@@ -15452,7 +15451,7 @@ paths:
   /public/youtube/comments/{videoId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get video comments
       description: >-
         The API endpoint allows you to retrieve YouTube video comments based on
@@ -15906,7 +15905,7 @@ paths:
   /public/youtube/related/{videoId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get related videos
       description: >-
         The API endpoint returns a list of recommended YouTube videos based on
@@ -17284,7 +17283,7 @@ paths:
   /public/youtube/playlists:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get playlists
       description: "This API endpoint allows users to retrieve playlists associated with the channel.\n\nBy accessing this endpoint, users can obtain a collection of playlists that belong to the channel.\n\nThis functionality is particularly useful for implementing a \"Playlists\" tab in the channel page UI design, where users can view the playlists conveniently.\n\n**Disclaimer:**\n\nData provided by the API is static and not real-time.\n\nThis simplifies the process of developing a\_**YouTube clone**, allowing developers to solely focus on UI design and creativity, without worrying about complex API key configuration."
       operationId: getPlaylists
@@ -17980,7 +17979,7 @@ paths:
   /public/youtube/playlists/{playlistId}:
     get:
       tags:
-        - 📡 Public APIs
+        - Public APIs
       summary: Get playlist details and items
       description: >-
         This API endpoint provides the details of a playlist, including playlist
@@ -18905,7 +18904,7 @@ paths:
   /kitchen-sink/http-methods/get:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get request
       description: >-
@@ -19048,7 +19047,7 @@ paths:
   /kitchen-sink/http-methods/post:
     post:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Post request
       description: >-
@@ -19196,7 +19195,7 @@ paths:
   /kitchen-sink/http-methods/put:
     put:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Put request
       description: >-
@@ -19343,7 +19342,7 @@ paths:
   /kitchen-sink/http-methods/patch:
     patch:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Patch request
       description: >-
@@ -19491,7 +19490,7 @@ paths:
   /kitchen-sink/http-methods/delete:
     delete:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Delete request
       description: >-
@@ -19633,7 +19632,7 @@ paths:
   /kitchen-sink/status-codes:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get all status codes
       description: >-
@@ -21186,7 +21185,7 @@ paths:
   /kitchen-sink/status-codes/{statusCode}:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get status code
       description: >-
@@ -21296,7 +21295,7 @@ paths:
   /kitchen-sink/request/headers:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get request headers
       description: >-
@@ -21411,7 +21410,7 @@ paths:
   /kitchen-sink/request/ip:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get client IP
       description: >-
@@ -21493,7 +21492,7 @@ paths:
   /kitchen-sink/request/user-agent:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get user agent
       description: >-
@@ -21572,7 +21571,7 @@ paths:
   /kitchen-sink/request/path-variable/{pathVariable}:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get path variable
       description: >-
@@ -21674,7 +21673,7 @@ paths:
   /kitchen-sink/request/query-parameter:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get query parameters
       description: >-
@@ -21793,7 +21792,7 @@ paths:
   /kitchen-sink/response/headers:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get response headers
       description: >-
@@ -21903,7 +21902,7 @@ paths:
   /kitchen-sink/response/cache/{timeToLive}/{cacheResponseDirective}:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Set cache control header
       description: "- `Cache-control`\_is an HTTP header used to specify browser caching policies in both client requests and server responses.\n    \n\n- Policies include how a resource is cached, where it’s cached and its maximum age before expiring (i.e., time to live)\n    \n\n_For example,_\n\n`cache-control: max-age=120` means that the returned resource is valid for **120** seconds, after which the browser has to request a newer version.\n\n- The `public` (cacheResponseDirective) response directive indicates that a resource can be cached by any cache.  \n    \n- The `private` (cacheResponseDirective) response directive indicates that a resource is user specific - it can still be cached, but only on a client device. For example, a web page response marked as private can be cached by a desktop browser, but not a content delivery network (CDN)."
@@ -22009,7 +22008,7 @@ paths:
   /kitchen-sink/response/html:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send HTML template response
       description: >-
@@ -22103,7 +22102,7 @@ paths:
   /kitchen-sink/response/xml:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send XML response
       description: >-
@@ -22198,7 +22197,7 @@ paths:
   /kitchen-sink/response/gzip:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send gzip response
       description: >-
@@ -22320,7 +22319,7 @@ paths:
   /kitchen-sink/response/brotli:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send brotli response
       description: >-
@@ -22435,7 +22434,7 @@ paths:
   /kitchen-sink/cookies/get:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Get cookies
       description: >-
@@ -22522,7 +22521,7 @@ paths:
   /kitchen-sink/cookies/set:
     post:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Set cookie
       description: >-
@@ -22626,7 +22625,7 @@ paths:
   /kitchen-sink/cookies/remove:
     delete:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Remove cookie
       description: >-
@@ -22720,7 +22719,7 @@ paths:
   /kitchen-sink/redirect/to:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
       summary: Redirect to url
       description: >-
         The API endpoint redirects the client to a URL specified in the query
@@ -22865,7 +22864,7 @@ paths:
   /kitchen-sink/image/jpeg:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send JPEG image
       description: >-
@@ -22881,7 +22880,7 @@ paths:
   /kitchen-sink/image/jpg:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send JPG image
       description: >-
@@ -22897,7 +22896,7 @@ paths:
   /kitchen-sink/image/png:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send PNG image
       description: >-
@@ -22913,7 +22912,7 @@ paths:
   /kitchen-sink/image/webp:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send WEBP image
       description: >-
@@ -22929,7 +22928,7 @@ paths:
   /kitchen-sink/image/svg:
     get:
       tags:
-        - 🧰 Kitchen Sink
+        - Kitchen Sink
         
       summary: Send SVG image
       description: >-
@@ -22946,7 +22945,7 @@ paths:
     get:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
         
       summary: Redirect to google login
       description: >-
@@ -22964,7 +22963,7 @@ paths:
     get:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
         
       summary: Google login callback url
       description: >-
@@ -22983,7 +22982,7 @@ paths:
     get:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
         
       summary: Redirect to github login
       description: >-
@@ -23001,7 +23000,7 @@ paths:
     get:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
         
       summary: Github login callback url
       description: >-
@@ -23020,7 +23019,7 @@ paths:
     get:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Get logged in user
       description: >-
         The API endpoint allows you to retrieve the details of the currently
@@ -23159,7 +23158,7 @@ paths:
     get:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Verify user email
       description: >-
         The API endpoint is used to verify a user's email by accessing the
@@ -23250,7 +23249,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Register user
       description: >-
         The API endpoint allows users to register or signup to create their
@@ -23415,7 +23414,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Login user
       description: >-
         The API endpoint allows users to log into the application securely and
@@ -23606,7 +23605,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Logout user
       description: >-
         The API endpoint is responsible for logging out users from the
@@ -23692,7 +23691,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Refresh token
       description: >-
         The Refresh Access Token API is responsible for refreshing the access
@@ -23798,7 +23797,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Assign role
       description: >-
         The API endpoint allows administrators to change the roles of users
@@ -23894,7 +23893,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Resend email verification
       description: >-
         The API endpoint allows the logged-in user to request a resend of the
@@ -24070,7 +24069,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Change current password
       description: >-
         The Change Password API allows logged-in users to update their current
@@ -24164,7 +24163,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Forgot password request
       description: >-
         The API endpoint allows you to send a forgot password email by providing
@@ -24255,7 +24254,7 @@ paths:
     post:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Reset forgotten password
       description: >-
         The API endpoint enables users to reset their password through the
@@ -24353,7 +24352,7 @@ paths:
     patch:
       tags:
         
-        - 🔐 Authentication
+        - Authentication
       summary: Update avatar
       description: >-
         The API endpoint enables users to update their avatar or profile
@@ -24525,7 +24524,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get my profile
       description: >-
@@ -24651,7 +24650,7 @@ paths:
     patch:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Update my profile
       description: >-
@@ -24786,7 +24785,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get my orders
       description: >-
@@ -25068,7 +25067,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get all products
       description: >-
@@ -25991,7 +25990,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Create product
       description: >-
@@ -26180,7 +26179,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get product by id
       description: >-
@@ -26383,7 +26382,7 @@ paths:
     delete:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Delete product
       description: >-
@@ -26522,7 +26521,7 @@ paths:
     patch:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Update product
       description: >-
@@ -26757,7 +26756,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get products by category
       description: >-
@@ -27275,7 +27274,7 @@ paths:
     patch:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Remove sub image
       description: >-
@@ -27433,7 +27432,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get user cart
       description: >-
@@ -27846,7 +27845,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Add item or update item quantity
       description: >-
@@ -28225,7 +28224,7 @@ paths:
     delete:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Remove item from cart
       description: >-
@@ -28380,7 +28379,7 @@ paths:
     delete:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Clear cart
       description: >-
@@ -28460,7 +28459,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get all categories
       description: >-
@@ -28678,7 +28677,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Create category
       description: >-
@@ -28793,7 +28792,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get category by id
       description: >-
@@ -28904,7 +28903,7 @@ paths:
     delete:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Delete category
       description: >-
@@ -29010,7 +29009,7 @@ paths:
     patch:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Update category
       description: >-
@@ -29133,7 +29132,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get all coupons
       description: >-
@@ -29442,7 +29441,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Create coupon
       description: >-
@@ -29623,7 +29622,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get available coupon codes for customer
       description: >-
@@ -29937,7 +29936,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get coupon by id
       description: >-
@@ -30077,7 +30076,7 @@ paths:
     delete:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Delete coupon
       description: >-
@@ -30203,7 +30202,7 @@ paths:
     patch:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Update coupon
       description: >-
@@ -30354,7 +30353,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Apply coupon code
       description: >-
@@ -30861,7 +30860,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Remove coupon code
       description: >-
@@ -31101,7 +31100,7 @@ paths:
     patch:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Update coupon active status
       description: >-
@@ -31253,7 +31252,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get all addresses
       description: >-
@@ -31475,7 +31474,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Create address
       description: >-
@@ -31631,7 +31630,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get address by id
       description: >-
@@ -31766,7 +31765,7 @@ paths:
     delete:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Delete address
       description: >-
@@ -31893,7 +31892,7 @@ paths:
     patch:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Update address
       description: >-
@@ -32055,7 +32054,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get order list admin
       description: >-
@@ -32895,7 +32894,7 @@ paths:
     get:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Get order by id
       description: >-
@@ -33513,7 +33512,7 @@ paths:
   /ecommerce/orders/provider/stripe:
     post:
       tags:
-        - 🛒 Ecommerce
+        - Ecommerce
       summary: Generate stripe order
       description: >-
         Create a Stripe PaymentIntent and an unpaid Postgres order (default provider).
@@ -33537,7 +33536,7 @@ paths:
   /ecommerce/orders/provider/stripe/verify-payment:
     post:
       tags:
-        - 🛒 Ecommerce
+        - Ecommerce
       summary: Verify stripe payment
       description: >-
         After client confirms the PaymentIntent, send `stripe_payment_intent_id`.
@@ -33560,7 +33559,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Generate razorpay order
       description: >-
@@ -33701,7 +33700,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Generate paypal order
       description: >-
@@ -33850,7 +33849,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Verify razorpay payment
       description: >-
@@ -34025,7 +34024,7 @@ paths:
     post:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Verify paypal payment
       description: >-
@@ -34063,7 +34062,7 @@ paths:
     patch:
       tags:
         
-        - 🛒 Ecommerce
+        - Ecommerce
         
       summary: Update order status
       description: >-
@@ -34166,7 +34165,7 @@ paths:
     get:
       tags:
         
-        - ✅ Todo list
+        - Todo list
       summary: Get all todos
       description: >-
         The API endpoint allows you to retrieve all the added todos.
@@ -34330,7 +34329,7 @@ paths:
     get:
       tags:
         
-        - ✅ Todo list
+        - Todo list
       summary: Get todo by id
       description: >-
         The API endpoint retrieves a specific todo item based on the todo ID
@@ -34432,7 +34431,7 @@ paths:
     delete:
       tags:
         
-        - ✅ Todo list
+        - Todo list
       summary: Delete todo
       description: >-
         The API endpoint is responsible for deleting a todo item based on the
@@ -34537,7 +34536,7 @@ paths:
     patch:
       tags:
         
-        - ✅ Todo list
+        - Todo list
       summary: Update todo
       description: >-
         The API endpoint is responsible for updating a todo based on the
@@ -34662,7 +34661,7 @@ paths:
     post:
       tags:
         
-        - ✅ Todo list
+        - Todo list
       summary: Create todo
       description: >-
         The "Create Todo" API endpoint allows you to create a new todo item by
@@ -34779,7 +34778,7 @@ paths:
     patch:
       tags:
         
-        - ✅ Todo list
+        - Todo list
       summary: Toggle todo done status
       description: >-
         The API endpoint is responsible for toggling the done status of a todo
@@ -34889,7 +34888,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get my profile
       description: >-
@@ -35090,7 +35089,7 @@ paths:
     patch:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Update user profile
       description: >-
@@ -35352,7 +35351,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get profile by username
       description: >-
@@ -35561,7 +35560,7 @@ paths:
     patch:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Update cover image
       description: >-
@@ -35795,7 +35794,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get all posts
       description: >-
@@ -37563,7 +37562,7 @@ paths:
     post:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Create a post
       description: >-
@@ -37912,7 +37911,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get post by id
       description: >-
@@ -38229,7 +38228,7 @@ paths:
     delete:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Delete a post
       description: >-
@@ -38309,7 +38308,7 @@ paths:
     patch:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Update post
       description: >-
@@ -38731,7 +38730,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get my posts
       description: >-
@@ -39173,7 +39172,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get posts by username
       description: >-
@@ -39916,7 +39915,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get posts by tag
       description: >-
@@ -40681,7 +40680,7 @@ paths:
     patch:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Remove post image
       description: >-
@@ -41003,7 +41002,7 @@ paths:
     post:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Like or unlike post
       description: >-
@@ -41100,7 +41099,7 @@ paths:
     post:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Like or unlike comment
       description: >-
@@ -41198,7 +41197,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get post comments
       description: >-
@@ -41738,7 +41737,7 @@ paths:
     post:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Add comment
       description: >-
@@ -41872,7 +41871,7 @@ paths:
     delete:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Delete comment
       description: >-
@@ -41996,7 +41995,7 @@ paths:
     patch:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Update comment
       description: >-
@@ -42140,7 +42139,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get bookmarked posts
       description: >-
@@ -43027,7 +43026,7 @@ paths:
     post:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Add or remove bookmark
       description: >-
@@ -43125,7 +43124,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get user's followers list
       description: >-
@@ -43695,7 +43694,7 @@ paths:
     get:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Get user's following to list
       description: >-
@@ -44266,7 +44265,7 @@ paths:
     post:
       tags:
         
-        - 📱 Social Media
+        - Social Media
         
       summary: Follow or unfollow user
       description: >-
@@ -44353,7 +44352,7 @@ paths:
     get:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Get user's chat list
       description: >-
@@ -45117,7 +45116,7 @@ paths:
     get:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Get available users
       description: >-
@@ -46828,7 +46827,7 @@ paths:
     post:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Create or get a one on one chat
       description: >-
@@ -47056,7 +47055,7 @@ paths:
     delete:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Delete one on one chat
       description: >-
@@ -47156,7 +47155,7 @@ paths:
     post:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Create a group chat
       description: >-
@@ -47540,7 +47539,7 @@ paths:
     get:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Get group chat details
       description: >-
@@ -47906,7 +47905,7 @@ paths:
     delete:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Delete a group chat
       description: >-
@@ -47997,7 +47996,7 @@ paths:
     patch:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Update group chat name
       description: >-
@@ -48264,7 +48263,7 @@ paths:
     post:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Add participant in a group chat
       description: >-
@@ -48517,7 +48516,7 @@ paths:
     delete:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Remove participant from a group chat
       description: >-
@@ -48751,7 +48750,7 @@ paths:
     delete:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Leave group chat
       description: >-
@@ -49237,7 +49236,7 @@ paths:
     get:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Get all messages
       description: >-
@@ -50157,7 +50156,7 @@ paths:
     post:
       tags:
         
-        - 💬 Chat App
+        - Chat App
         
       summary: Send message
       description: >-
@@ -50378,7 +50377,7 @@ paths:
   /chat-app/messages/{chatId}/{messageId}:
     delete:
       tags:
-        - 💬 Chat App
+        - Chat App
       summary: Delete chat message
       description: >-
         This API endpoint empowers logged-in users to seamlessly delete a
@@ -50486,7 +50485,7 @@ paths:
   /seed/generated-credentials:
     get:
       tags:
-        - 🌱 Database Seeding
+        - Database Seeding
       summary: Get generated user credentials
       description: >-
         This API serves a JSON file containing a collection of dummy usernames
@@ -50884,7 +50883,7 @@ paths:
   /seed/todos:
     post:
       tags:
-        - 🌱 Database Seeding
+        - Database Seeding
       summary: Seed todos
       description: >-
         This API endpoint is responsible for populating the database with dummy
@@ -50969,7 +50968,7 @@ paths:
   /seed/ecommerce:
     post:
       tags:
-        - 🌱 Database Seeding
+        - Database Seeding
       summary: Seed ecommerce
       description: >-
         This API endpoint is responsible for populating all the essential
@@ -51054,7 +51053,7 @@ paths:
   /seed/social-media:
     post:
       tags:
-        - 🌱 Database Seeding
+        - Database Seeding
       summary: Seed social media
       description: >-
         This API endpoint is responsible for populating all the essential
@@ -51139,7 +51138,7 @@ paths:
   /seed/chat-app:
     post:
       tags:
-        - 🌱 Database Seeding
+        - Database Seeding
       summary: Seed chat app
       description: >-
         This API endpoint is responsible for populating all the essential entities required for a chat app service in the database.
@@ -51224,7 +51223,7 @@ paths:
   /reset-db:
     delete:
       tags:
-        - 🚫 Danger Zone
+        - Danger Zone
       summary: Reset database
       description: >-
         ⚠️ DANGER ⚠️
@@ -51301,7 +51300,7 @@ paths:
   /healthcheck:
     get:
       tags:
-        - ⚙️ System
+        - System
       summary: ⛑️ healthcheck
       description: >-
         This API endpoint is commonly used to determine the health status or
@@ -51374,7 +51373,7 @@ paths:
   /live:
     get:
       tags:
-        - ⚙️ System
+        - System
       summary: 💓 live
       description: >-
         Liveness probe. Returns 200 if the process is running.
@@ -51417,7 +51416,7 @@ paths:
   /ready:
     get:
       tags:
-        - ⚙️ System
+        - System
       summary: ✅ ready
       description: >-
         Readiness probe. Returns 200 only when the app can serve traffic
@@ -51473,7 +51472,7 @@ paths:
   /version:
     get:
       tags:
-        - ⚙️ System
+        - System
       summary: 📦 version
       description: >-
         Returns application name, version, Node.js runtime, and environment.
@@ -51522,29 +51521,29 @@ paths:
                     statusCode: 200
                     success: true
 tags:
-  - name: ⚙️ System
+  - name: System
     description: Health, readiness, liveness, and version endpoints for operations and monitoring.
-  - name: 📡 Public APIs
+  - name: Public APIs
     description: >-
       Sample public datasets for demos, fixtures, and UI prototyping —
       legacy collections (users, products, jokes, books, …) plus world/industry
       datasets (companies, customers, employees, inventory, orders, tickets,
       invoices, shipments, transactions, projects, subscriptions, appointments).
-  - name: 🌍 Geo APIs
+  - name: Geo APIs
     description: Look up countries, then states, then cities for address and location pickers.
-  - name: 🧰 Kitchen Sink
+  - name: Kitchen Sink
     description: General-purpose backend helpers for common HTTP, file, and request patterns.
-  - name: 🔐 Authentication
+  - name: Authentication
     description: Registration, login, session, and identity flows used by protected modules.
-  - name: 🛒 Ecommerce
+  - name: Ecommerce
     description: Catalog, cart, checkout, coupons, and order APIs for storefront integrations.
-  - name: ✅ Todo list
+  - name: Todo list
     description: Task list CRUD suitable for tutorials and lightweight productivity clients.
-  - name: 📱 Social Media
+  - name: Social Media
     description: Profiles, posts, comments, likes, and social graph endpoints.
-  - name: 💬 Chat App
+  - name: Chat App
     description: Realtime messaging surfaces for conversations and attachments.
-  - name: 🌱 Database Seeding
+  - name: Database Seeding
     description: Development helpers that populate modules with deterministic starter data.
-  - name: 🚫 Danger Zone
+  - name: Danger Zone
     description: '**Warning:** destructive maintenance operations. Use only in local or disposable environments.'
