@@ -29,7 +29,8 @@ import { ApiError } from "@/utils/ApiError.js";
 import { ApiResponse } from "@/utils/ApiResponse.js";
 import { asyncHandler } from "@/utils/asyncHandler.js";
 import {
-  orderConfirmationMailgenContent,
+  RESEND_TEMPLATE_ALIASES,
+  orderConfirmationTemplateVariables,
   sendEmail,
 } from "@/utils/mail.js";
 import { aggregatePaginate } from "@/utils/helpers.js";
@@ -317,8 +318,10 @@ const orderFulfillmentHelper = async (orderPaymentId, req = null) => {
   await sendEmail({
     email,
     subject: "Order confirmed",
-    mailgenContent: orderConfirmationMailgenContent(
+    templateId: RESEND_TEMPLATE_ALIASES.orderConfirmation,
+    variables: orderConfirmationTemplateVariables(
       username,
+      String(order.id),
       userCart.items,
       order.discountedOrderPrice ?? 0
     ),
