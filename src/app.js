@@ -26,12 +26,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const file = fs.readFileSync(path.resolve(__dirname, "./swagger.yaml"), "utf8");
+const apiHostUrl = (
+  process.env.PRAXIS_API_HOST_URL || "http://localhost:8000"
+).replace(/\/$/, "");
 const swaggerDocument = YAML.parse(
-  file?.replace(
-    "- url: ${{server}}",
-    `- url: ${process.env.PRAXIS_API_HOST_URL || "http://localhost:8000"}/api/v1`
-  )
+  file?.replace("- url: ${{server}}", `- url: ${apiHostUrl}/api/v1`)
 );
+
+// Always win over whatever is baked into swagger.yaml (hardcoded localhost, stale placeholder, etc.)
+swaggerDocument.servers = [
+  {
+    url: `${apiHostUrl}/api/v1`,
+    description: "Praxis API",
+  },
+];
 
 // Hide YouTube paths from Swagger UI (copyright). Definitions remain in swagger.yaml.
 if (swaggerDocument?.paths) {
