@@ -21,9 +21,11 @@ import {
   getStaticFilePath,
   removeLocalFile,
 } from "@/utils/helpers.js";
+import { CLIENT_PATHS, getClientUrl } from "@/utils/clientUrls.js";
 import {
-  emailVerificationMailgenContent,
-  forgotPasswordMailgenContent,
+  RESEND_TEMPLATE_ALIASES,
+  emailVerificationTemplateVariables,
+  resetPasswordTemplateVariables,
   sendEmail,
 } from "@/utils/mail.js";
 
@@ -127,11 +129,11 @@ const registerUser = asyncHandler(async (req, res) => {
   await sendEmail({
     email: createdUser.email,
     subject: "Please verify your email",
-    mailgenContent: emailVerificationMailgenContent(
+    templateId: RESEND_TEMPLATE_ALIASES.emailVerification,
+    variables: emailVerificationTemplateVariables(
       createdUser.username,
-      `${req.protocol}://${req.get(
-        "host"
-      )}/api/v1/users/verify-email/${unHashedToken}`
+      // Frontend page that verifies the token and shows a success/error screen
+      getClientUrl(CLIENT_PATHS.verifyEmail, { token: unHashedToken })
     ),
   });
 
@@ -227,11 +229,26 @@ const logoutUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User logged out"));
 });
 
+/**
+ * Browser navigations prefer HTML; curl / fetch with Accept: application/json stay JSON.
+ * Lets legacy API verification links land on the UI instead of a raw JSON blob.
+ */
+const prefersHtmlResponse = (req) => req.accepts(["html", "json"]) === "html";
+
+const emailVerificationUiRedirect = (status, message) =>
+  getClientUrl(CLIENT_PATHS.verifyEmail, { status, message });
+
 const verifyEmail = asyncHandler(async (req, res) => {
   const { verificationToken } = req.params;
   const db = requireDb();
+  const asHtml = prefersHtmlResponse(req);
 
   if (!verificationToken) {
+    if (asHtml) {
+      return res.redirect(
+        emailVerificationUiRedirect("error", "Email verification token is missing")
+      );
+    }
     throw new ApiError(400, "Email verification token is missing");
   }
 
@@ -252,6 +269,11 @@ const verifyEmail = asyncHandler(async (req, res) => {
     .limit(1);
 
   if (!user) {
+    if (asHtml) {
+      return res.redirect(
+        emailVerificationUiRedirect("error", "Token is invalid or expired")
+      );
+    }
     throw new ApiError(489, "Token is invalid or expired");
   }
 
@@ -263,6 +285,10 @@ const verifyEmail = asyncHandler(async (req, res) => {
       isEmailVerified: true,
     })
     .where(eq(users.id, user.id));
+
+  if (asHtml) {
+    return res.redirect(emailVerificationUiRedirect("success"));
+  }
 
   return res
     .status(200)
@@ -299,11 +325,10 @@ const resendEmailVerification = asyncHandler(async (req, res) => {
   await sendEmail({
     email: user.email,
     subject: "Please verify your email",
-    mailgenContent: emailVerificationMailgenContent(
+    templateId: RESEND_TEMPLATE_ALIASES.emailVerification,
+    variables: emailVerificationTemplateVariables(
       user.username,
-      `${req.protocol}://${req.get(
-        "host"
-      )}/api/v1/users/verify-email/${unHashedToken}`
+      getClientUrl(CLIENT_PATHS.verifyEmail, { token: unHashedToken })
     ),
   });
 
@@ -390,10 +415,11 @@ const forgotPasswordRequest = asyncHandler(async (req, res) => {
   await sendEmail({
     email: user.email,
     subject: "Password reset request",
-    mailgenContent: forgotPasswordMailgenContent(
+    templateId: RESEND_TEMPLATE_ALIASES.resetPassword,
+    variables: resetPasswordTemplateVariables(
       user.username,
       // Frontend page that collects the new password and posts to reset-password
-      `${process.env.FORGOT_PASSWORD_REDIRECT_URL}/${unHashedToken}`
+      getClientUrl(CLIENT_PATHS.forgotPassword, { token: unHashedToken })
     ),
   });
 
@@ -529,7 +555,7 @@ const handleSocialLogin = asyncHandler(async (req, res) => {
     .cookie("accessToken", accessToken, cookieOptions)
     .cookie("refreshToken", refreshToken, cookieOptions)
     .redirect(
-      `${process.env.CLIENT_SSO_REDIRECT_URL}?accessToken=${accessToken}&refreshToken=${refreshToken}`
+      getClientUrl(CLIENT_PATHS.profile, { accessToken, refreshToken })
     );
 });
 
