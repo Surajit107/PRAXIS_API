@@ -46,6 +46,72 @@ describe("P9 — mounts + mongoose-free runtime", () => {
     }
   });
 
+  test("Kitchen-sink HTTP methods cover all nine verbs", async () => {
+    const agent = await getTestAgent();
+    const base = "/api/v1/kitchen-sink/http-methods";
+
+    const getRes = await agent.get(`${base}/get`);
+    expect(getRes.status).toBe(200);
+    expect(getRes.body.data.method).toBe("GET");
+
+    const postRes = await agent.post(`${base}/post`);
+    expect(postRes.status).toBe(200);
+    expect(postRes.body.data.method).toBe("POST");
+
+    const putRes = await agent.put(`${base}/put`);
+    expect(putRes.status).toBe(200);
+    expect(putRes.body.data.method).toBe("PUT");
+
+    const patchRes = await agent.patch(`${base}/patch`);
+    expect(patchRes.status).toBe(200);
+    expect(patchRes.body.data.method).toBe("PATCH");
+
+    const deleteRes = await agent.delete(`${base}/delete`);
+    expect(deleteRes.status).toBe(200);
+    expect(deleteRes.body.data.method).toBe("DELETE");
+
+    const headRes = await agent.head(`${base}/head`);
+    expect(headRes.status).toBe(200);
+    expect(headRes.text ?? "").toBe("");
+    expect(headRes.headers["content-type"]).toMatch(/application\/json/);
+    expect(headRes.headers["content-length"]).toBeDefined();
+
+    const optionsRes = await agent.options(`${base}/options`);
+    expect(optionsRes.status).toBe(200);
+    expect(optionsRes.body.data.method).toBe("OPTIONS");
+    expect(optionsRes.body.data.allow).toEqual(
+      expect.arrayContaining([
+        "GET",
+        "HEAD",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE",
+        "OPTIONS",
+        "TRACE",
+        "CONNECT",
+      ])
+    );
+    expect(String(optionsRes.headers.allow)).toMatch(/TRACE/);
+
+    const traceRes = await agent.trace(`${base}/trace`);
+    expect(traceRes.status).toBe(200);
+    expect(String(traceRes.headers["content-type"])).toMatch(/message\/http/);
+    expect(String(traceRes.text)).toMatch(/^TRACE /);
+
+    const traceAliasRes = await agent.get(`${base}/trace`);
+    expect(traceAliasRes.status).toBe(200);
+    expect(traceAliasRes.body.data.method).toBe("TRACE");
+    expect(traceAliasRes.body.data.echo).toMatch(/TRACE /);
+
+    // CONNECT: Express never sees the real verb (Node emits `connect` on http.Server).
+    // Playground + curl demos use this GET alias; raw CONNECT works when httpServer is listening.
+    const connectAliasRes = await agent.get(`${base}/connect`);
+    expect(connectAliasRes.status).toBe(200);
+    expect(connectAliasRes.body.data.method).toBe("CONNECT");
+    expect(connectAliasRes.body.data.tunnel.established).toBe(true);
+  });
+
   test("src/app.js mounts every expected API surface prefix", () => {
     const appSrc = fs.readFileSync(path.resolve("./src/app.js"), "utf8");
 

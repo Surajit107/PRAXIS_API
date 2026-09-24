@@ -19629,6 +19629,197 @@ paths:
                     message: DELETE request
                     statusCode: 200
                     success: true
+  /kitchen-sink/http-methods/head:
+    head:
+      tags:
+        - Kitchen Sink
+      summary: Head request
+      description: >-
+        The `HEAD` method is identical to `GET` except the server must not return
+        a message body. Praxis returns the same metadata headers (`Content-Type`,
+        `Content-Length`, `ETag`) that a GET would, with an empty body.
+      operationId: headRequest
+      responses:
+        '200':
+          description: HEAD request — headers only, no body
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: string
+                example: '420'
+            ETag:
+              schema:
+                type: string
+                example: W/"praxis-head-420"
+  /kitchen-sink/http-methods/options:
+    options:
+      tags:
+        - Kitchen Sink
+      summary: Options request
+      description: >-
+        The `OPTIONS` method asks which methods are allowed on this URI.
+        Praxis returns an `Allow` header and a JSON body listing all nine
+        kitchen-sink HTTP methods.
+      operationId: optionsRequest
+      responses:
+        '200':
+          description: OPTIONS request
+          headers:
+            Allow:
+              schema:
+                type: string
+                example: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE, CONNECT
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+                example: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE, CONNECT
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      method:
+                        type: string
+                        example: OPTIONS
+                      allow:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - GET
+                          - HEAD
+                          - POST
+                          - PUT
+                          - PATCH
+                          - DELETE
+                          - OPTIONS
+                          - TRACE
+                          - CONNECT
+                      headers:
+                        type: object
+                      origin:
+                        type: string
+                      url:
+                        type: string
+                  message:
+                    type: string
+                    example: OPTIONS request
+                  statusCode:
+                    type: number
+                    example: 200
+                  success:
+                    type: boolean
+                    example: true
+  /kitchen-sink/http-methods/trace:
+    trace:
+      tags:
+        - Kitchen Sink
+      summary: Trace request
+      description: >-
+        The `TRACE` method asks the server to echo the received request back as
+        `message/http`. Useful for diagnosing proxies; often disabled in
+        production for security. A GET on the same path is a browser playground
+        alias because Fetch forbids TRACE.
+      operationId: traceRequest
+      responses:
+        '200':
+          description: TRACE echo
+          content:
+            message/http:
+              schema:
+                type: string
+                example: |
+                  TRACE /api/v1/kitchen-sink/http-methods/trace HTTP/1.1
+                  host: localhost:8000
+                  user-agent: curl/8.0.0
+    get:
+      tags:
+        - Kitchen Sink
+      summary: Trace request (browser alias)
+      description: >-
+        Browser Fetch forbids TRACE. This GET alias returns a JSON teaching
+        envelope with the same echo payload. Prefer `curl -X TRACE` for the
+        real verb.
+      operationId: traceRequestBrowserAlias
+      responses:
+        '200':
+          description: TRACE teaching payload via GET alias
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      method:
+                        type: string
+                        example: TRACE
+                      contentType:
+                        type: string
+                        example: message/http
+                      echo:
+                        type: string
+                      note:
+                        type: string
+                  message:
+                    type: string
+                    example: TRACE request (browser alias)
+                  statusCode:
+                    type: number
+                    example: 200
+                  success:
+                    type: boolean
+                    example: true
+  /kitchen-sink/http-methods/connect:
+    get:
+      tags:
+        - Kitchen Sink
+      summary: Connect request (browser / playground alias)
+      description: >-
+        Browser Fetch forbids CONNECT, and Node's HTTP server does not deliver
+        CONNECT to Express (it emits `connect` on the raw server instead).
+
+        This GET alias returns the CONNECT teaching payload for the playground.
+
+        When the API process is listening, a real `CONNECT` to this path is
+        handled by `attachConnectTeachingHandler` and returns
+        `200 Connection Established` plus the same JSON stub on the tunnel.
+      operationId: connectRequestBrowserAlias
+      responses:
+        '200':
+          description: CONNECT teaching payload via GET alias
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      method:
+                        type: string
+                        example: CONNECT
+                      tunnel:
+                        type: object
+                      note:
+                        type: string
+                  message:
+                    type: string
+                    example: CONNECT request (browser alias)
+                  statusCode:
+                    type: number
+                    example: 200
+                  success:
+                    type: boolean
+                    example: true
   /kitchen-sink/status-codes:
     get:
       tags:

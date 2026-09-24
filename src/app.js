@@ -14,6 +14,7 @@ import { fileURLToPath } from "url";
 import YAML from "yaml";
 import { sql } from "drizzle-orm";
 import { PraxisRedisStore } from "@/cache/sessionStore.js";
+import { attachConnectTeachingHandler } from "@/controllers/kitchen-sink/connectTeaching.handler.js";
 import { dbInstance } from "@/db/index.js";
 import morganMiddleware from "@/logger/morgan.logger.js";
 import logger from "@/logger/winston.logger.js";
@@ -48,6 +49,9 @@ app.set("trust proxy", 1);
 
 const httpServer = createServer(app);
 
+// CONNECT is not delivered via Express `request` — attach teaching stub on the raw server.
+attachConnectTeachingHandler(httpServer);
+
 const io = new Server(httpServer, {
   pingTimeout: 60000,
   cors: {
@@ -59,15 +63,49 @@ const io = new Server(httpServer, {
 app.set("io", io); // using set method to mount the `io` instance on the app to avoid usage of `global`
 
 // global middlewares
-app.use(
-  cors({
-    origin:
-      process.env.CORS_ORIGIN === "*"
-        ? "*" // This might give CORS error for some origins due to credentials set to true
-        : process.env.CORS_ORIGIN?.split(","), // Multiple origins: comma-separated in CORS_ORIGIN
-    credentials: true,
-  })
-);
+const corsOrigin =
+  process.env.CORS_ORIGIN === "*"
+    ? "*" // This might give CORS error for some origins due to credentials set to true
+    : process.env.CORS_ORIGIN?.split(","); // Multiple origins: comma-separated in CORS_ORIGIN
+
+const corsMiddleware = cors({
+  origin: corsOrigin,
+  credentials: true,
+});
+
+/**
+ * `cors` ends every OPTIONS with 204 before routes run. Bypass that short-circuit for the
+ * kitchen-sink OPTIONS teaching endpoint so students can inspect Allow + JSON body.
+ * Real CORS preflights on all other paths keep the default behaviour.
+ */
+const kitchenSinkOptionsCors = cors({
+  origin: corsOrigin,
+  credentials: true,
+  preflightContinue: true,
+  methods: [
+    "GET",
+    "HEAD",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+    "TRACE",
+    "CONNECT",
+  ],
+});
+
+app.use((req, res, next) => {
+  const isKitchenSinkOptionsLesson =
+    req.method === "OPTIONS" &&
+    req.path.replace(/\/$/, "") === "/api/v1/kitchen-sink/http-methods/options";
+
+  if (isKitchenSinkOptionsLesson) {
+    return kitchenSinkOptionsCors(req, res, next);
+  }
+
+  return corsMiddleware(req, res, next);
+});
 
 app.use(requestIp.mw());
 
