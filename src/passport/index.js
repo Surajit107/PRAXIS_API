@@ -54,8 +54,11 @@ try {
 
   passport.deserializeUser(async (id, next) => {
     try {
+      // Soft-fail: never pass an Error here. passport.session() runs on every
+      // request (including /docs). next(err) would turn public routes into
+      // JSON 404/500 for anyone holding a stale OAuth session cookie.
       if (!dbInstance) {
-        next(new ApiError(500, "Database is not connected"), null);
+        next(null, false);
         return;
       }
 
@@ -65,16 +68,16 @@ try {
         .where(eq(users.id, id))
         .limit(1);
 
-      if (user) next(null, shapeUser(user));
-      else next(new ApiError(404, "User does not exist"), null);
+      if (user) {
+        next(null, shapeUser(user));
+        return;
+      }
+
+      // User deleted / DB reset while session still alive — clear login state.
+      next(null, false);
     } catch (error) {
-      next(
-        new ApiError(
-          500,
-          "Something went wrong while deserializing the user. Error: " + error
-        ),
-        null
-      );
+      console.error("PASSPORT DESERIALIZE ERROR: ", error);
+      next(null, false);
     }
   });
 
